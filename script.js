@@ -79,167 +79,49 @@ const teams = [
 ];
 
 
-const races=[
-['Australia','Melbourne','2026-03-08','15:00','16:00','12:30','09:30',''],
-['China','Shanghai','2026-03-15','15:00','15:00','11:00','-', 'SPRINT'],
-['Japan','Suzuka','2026-03-29','14:00','15:00','11:30','10:30',''],
-['Miami','Miami','2026-05-03','16:00','16:00','12:30','12:00','SPRINT'],
-['Canada','Montreal','2026-05-24','16:00','16:00','12:30','12:00','SPRINT'],
-['Monaco','Monaco','2026-06-07','15:00','16:00','12:30','-', ''],
-['Spain','Barcelona-Catalunya','2026-06-14','15:00','16:00','11:30','-', ''],
-['Austria','Spielberg','2026-06-28','15:00','16:00','13:30','-', ''],
-['Great Britain','Silverstone','2026-07-05','15:00','16:00','11:30','12:00','SPRINT'],
-['Belgium','Spa-Francorchamps','2026-07-19','16:00','16:00','13:30','-', ''],
-['Hungary','Budapest','2026-07-26','15:00','16:00','13:30','-', ''],
-['Netherlands','Zandvoort','2026-08-23','15:00','16:00','11:30','12:00','SPRINT'],
-['Italy','Monza','2026-09-06','15:00','16:00','12:30','-', ''],
-['Spain','Madrid','2026-09-13','15:00','16:00','11:30','-', ''],
-['Azerbaijan','Baku','2026-09-26','15:00','16:00','11:30','-', ''],
-['Bahrain','Sepang','2026-10-04','20:00','21:00','16:30','-', ''],
-['Singapore','Singapore','2026-10-11','20:00','21:00','17:30','17:00','SPRINT'],
-['United States','Austin','2026-10-25','15:00','16:00','12:30','-', ''],
-['Mexico','Mexico City','2026-11-01','14:00','15:00','11:30','-', ''],
-['Brazil','São Paulo','2026-11-08','14:00','15:00','11:30','-', ''],
-['United States','Las Vegas','2026-11-21','20:00','20:00','17:30','-', ''],
-['Qatar','Lusail','2026-11-29','19:00','21:00','17:30','-', ''],
-['Abu Dhabi','Yas Marina','2026-12-06','17:00','18:00','13:30','-', '']
-].map((r,i)=>({country:r[0],venue:r[1],date:r[2],race:r[3],qualifying:r[4],fp1:r[5],sprint:r[6],fp3:r[5],round:i+1,type:r[7]}));
-
-let use12=true;
-const fmtTime=(v)=>{ if(!v || v==='-') return '—'; const [hh,mm]=v.split(':').map(Number); if(!use12) return `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}`; const ap=hh>=12?'PM':'AM'; const h=hh%12||12; return `${h}:${String(mm).padStart(2,'0')} ${ap}`; };
-const fmtDate=(v)=>new Intl.DateTimeFormat('th-TH',{day:'numeric',month:'short',year:'numeric'}).format(new Date(v+'T12:00:00'));
-const circuitImages={
- 'Melbourne':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Albert_Park_Circuit.svg?width=1000',
- 'Shanghai':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Shanghai_International_Circuit.svg?width=1000',
- 'Suzuka':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Suzuka_circuit_map.svg?width=1000',
- 'Sakhir':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Bahrain_International_Circuit--Grand_Prix_Layout.svg?width=1000',
- 'Jeddah':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Jeddah_Corniche_Circuit.svg?width=1000',
- 'Miami':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Miami_International_Autodrome.svg?width=1000',
- 'Montreal':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Circuit_Gilles_Villeneuve.svg?width=1000',
- 'Monaco':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Circuit_de_Monaco.svg?width=1000',
- 'Barcelona-Catalunya':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Circuit_de_Barcelona-Catalunya.svg?width=1000',
- 'Spielberg':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Red_Bull_Ring.svg?width=1000',
- 'Silverstone':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Silverstone_Circuit.svg?width=1000',
- 'Spa-Francorchamps':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Circuit_de_Spa-Francorchamps.svg?width=1000',
- 'Budapest':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Hungaroring.svg?width=1000',
- 'Zandvoort':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Circuit_Zandvoort.svg?width=1000',
- 'Monza':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Monza_track_map.svg?width=1000',
- 'Madrid':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Madring_circuit_map.svg?width=1000',
- 'Baku':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Baku_Formula_1_circuit_map.svg?width=1000',
- 'Singapore':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Marina_Bay_Street_Circuit.svg?width=1000',
- 'Austin':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Circuit_of_the_Americas.svg?width=1000',
- 'Mexico City':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Autodromo_Hermanos_Rodriguez.svg?width=1000',
- 'São Paulo':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Interlagos.svg?width=1000',
- 'Las Vegas':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Las_Vegas_Street_Circuit.svg?width=1000',
- 'Lusail':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Lusail_International_Circuit.svg?width=1000',
- 'Yas Marina':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Yas_Marina_Circuit.svg?width=1000',
- 'Sepang':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Sepang_International_Circuit.svg?width=1000'
-};
-const circuitFallback=(venue)=>`data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600"><rect width="1200" height="600" fill="#101010"/><path d="M120 430 C180 100 420 120 470 300 S800 500 860 180 S1100 170 1080 430" fill="none" stroke="#e10600" stroke-width="18" stroke-linecap="round"/><path d="M120 430 C180 100 420 120 470 300 S800 500 860 180 S1100 170 1080 430" fill="none" stroke="#fff" stroke-width="4" stroke-dasharray="12 10"/><text x="60" y="80" fill="#fff" font-family="Arial" font-size="44" font-weight="700">${venue}</text><text x="60" y="125" fill="#888" font-family="Arial" font-size="22">F1 CIRCUIT</text></svg>`)}`;
-const circuitSrc=(venue)=>circuitImages[venue]||circuitFallback(venue);
-const circuitWiki={
- 'Melbourne':'Albert Park Circuit','Shanghai':'Shanghai International Circuit','Suzuka':'Suzuka International Racing Course','Sakhir':'Bahrain International Circuit','Sepang':'Sepang International Circuit','Jeddah':'Jeddah Corniche Circuit','Miami':'Miami International Autodrome','Montreal':'Circuit Gilles Villeneuve','Monaco':'Circuit de Monaco','Barcelona-Catalunya':'Circuit de Barcelona-Catalunya','Spielberg':'Red Bull Ring','Silverstone':'Silverstone Circuit','Spa-Francorchamps':'Circuit de Spa-Francorchamps','Budapest':'Hungaroring','Zandvoort':'Circuit Zandvoort','Monza':'Monza Circuit','Madrid':'Madrid Grand Prix','Baku':'Baku City Circuit','Singapore':'Marina Bay Street Circuit','Austin':'Circuit of the Americas','Mexico City':'Autódromo Hermanos Rodríguez','São Paulo':'Interlagos Circuit','Las Vegas':'Las Vegas Strip Circuit','Lusail':'Lusail International Circuit','Yas Marina':'Yas Marina Circuit'
-};
-const teamLogoFallback={
- 'McLaren':'MCL','Ferrari':'FER','Mercedes':'MER','Red Bull Racing':'RBR','Racing Bulls':'VCARB','Alpine':'ALP','Audi':'AUD','Williams':'WIL','Cadillac':'CAD','Aston Martin':'AMR','Haas F1 Team':'HAS'
-};
-const teamLogoColor={McLaren:'#ff8000',Ferrari:'#e10600',Mercedes:'#00d2be','Red Bull Racing':'#3671c6','Racing Bulls':'#6692ff',Alpine:'#2293d1',Audi:'#d8d8d8',Williams:'#64c4ff',Cadillac:'#f5f5f5','Aston Martin':'#006f62','Haas F1 Team':'#b6b6b6'};
-function logoData(team){
- const code=teamLogoFallback[team]||'TEAM'; const color=teamLogoColor[team]||'#777';
- return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="300" height="160" viewBox="0 0 300 160"><rect width="300" height="160" rx="24" fill="#111"/><rect x="0" y="0" width="10" height="160" fill="${color}"/><text x="150" y="98" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="64" font-weight="900" fill="${color}">${code}</text></svg>`)}`;
-}
-const teamLogoUrl={
- 'McLaren':'https://media.formula1.com/image/upload/c_fit,h_64/q_auto/v1740000001/common/f1/2025/mclaren/2025mclarenlogowhite.webp',
- 'Ferrari':'https://media.formula1.com/image/upload/c_fit,h_64/q_auto/v1740000001/common/f1/2025/ferrari/2025ferrarilogolight.webp',
- 'Mercedes':'https://media.formula1.com/image/upload/c_fit,h_64/q_auto/v1740000001/common/f1/2025/mercedes/2025mercedeslogowhite.webp',
- 'Red Bull Racing':'https://media.formula1.com/image/upload/c_fit,h_64/q_auto/v1740000001/common/f1/2025/redbullracing/2025redbullracinglogowhite.webp',
- 'Racing Bulls':'https://media.formula1.com/image/upload/c_fit,h_64/q_auto/v1740000001/common/f1/2025/racingbulls/2025racingbullslogowhite.webp',
- 'Alpine':'https://media.formula1.com/image/upload/c_fit,h_64/q_auto/v1740000001/common/f1/2025/alpine/2025alpinelogowhite.webp',
- 'Haas F1 Team':'https://media.formula1.com/image/upload/c_fit,h_64/q_auto/v1740000001/common/f1/2025/haas/2025haaslogowhite.webp',
- 'Audi':'https://media.formula1.com/image/upload/c_fit,h_64/q_auto/v1740000001/common/f1/2026/audi/2026audilogowhite.webp',
- 'Williams':'https://media.formula1.com/image/upload/c_fit,h_64/q_auto/v1740000001/common/f1/2025/williams/2025williamslogowhite.webp',
- 'Aston Martin':'https://media.formula1.com/image/upload/c_fit,h_64/q_auto/v1740000001/common/f1/2025/astonmartin/2025astonmartinlogowhite.webp',
- 'Cadillac':'https://media.formula1.com/image/upload/c_fit,h_64/q_auto/v1740000001/common/f1/2026/cadillac/2026cadillaclogowhite.webp'
-};
-const driverImage={
- 'George Russell':'https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000001/common/f1/2026/mercedes/georus01/2026mercedesgeorus01right.webp',
- 'Andrea Kimi Antonelli':'https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000001/common/f1/2026/mercedes/andant01/2026mercedesandant01right.webp',
- 'Charles Leclerc':'https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000001/common/f1/2026/ferrari/chalec01/2026ferrarichalec01right.webp',
- 'Lewis Hamilton':'https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000001/common/f1/2026/ferrari/lewham01/2026ferrarilewham01right.webp',
- 'Lando Norris':'https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000001/common/f1/2026/mclaren/lannor01/2026mclarenlannor01right.webp',
- 'Oscar Piastri':'https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000001/common/f1/2026/mclaren/oscpia01/2026mclarenoscpia01right.webp',
- 'Max Verstappen':'https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000001/common/f1/2026/redbullracing/maxver01/2026redbullracingmaxver01right.webp',
- 'Isack Hadjar':'https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000001/common/f1/2026/redbullracing/isahad01/2026redbullracingisahad01right.webp',
- 'Liam Lawson':'https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000001/common/f1/2026/racingbulls/lialaw01/2026racingbullslialaw01right.webp',
- 'Arvid Lindblad':'https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000001/common/f1/2026/racingbulls/arllin01/2026racingbullsarllin01right.webp',
- 'Pierre Gasly':'https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000001/common/f1/2026/alpine/piegas01/2026alpinepiegas01right.webp',
- 'Franco Colapinto':'https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000001/common/f1/2026/alpine/fracol01/2026alpinefracol01right.webp',
- 'Esteban Ocon':'https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000001/common/f1/2026/haas/estoco01/2026haasestoco01right.webp',
- 'Oliver Bearman':'https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000001/common/f1/2026/haas/olibea01/2026haasolibea01right.webp',
- 'Nico Hülkenberg':'https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000001/common/f1/2026/audi/nichul01/2026audinichul01right.webp',
- 'Gabriel Bortoleto':'https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000001/common/f1/2026/audi/gabbor01/2026audigabbor01right.webp',
- 'Carlos Sainz':'https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000001/common/f1/2026/williams/carsai01/2026williamscarsai01right.webp',
- 'Alexander Albon':'https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000001/common/f1/2026/williams/alealb01/2026williamsalealb01right.webp',
- 'Fernando Alonso':'https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000001/common/f1/2026/astonmartin/feralo01/2026astonmartinferalo01right.webp',
- 'Lance Stroll':'https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000001/common/f1/2026/astonmartin/lanstr01/2026astonmartinlanstr01right.webp',
- 'Sergio Pérez':'https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000001/common/f1/2026/cadillac/serper01/2026cadillacserper01right.webp',
- 'Valtteri Bottas':'https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000001/common/f1/2026/cadillac/valbot01/2026cadillacvalbot01right.webp'
-};
-async function wikiPageImage(title, size=800){
- try{
-  const url='https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&piprop=thumbnail&pithumbsize='+size+'&origin=*&titles='+encodeURIComponent(title);
-  const r=await fetch(url,{cache:'force-cache'}); if(!r.ok) throw new Error('image api');
-  const j=await r.json(); const pages=j?.query?.pages||{}; const page=Object.values(pages)[0]; return page?.thumbnail?.source||'';
- }catch{return ''}
-}
-function imageFallback(img, fallback){img.onerror=()=>{img.onerror=null;img.src=fallback}};
-async function loadImages(){
- document.querySelectorAll('img[data-wiki]').forEach(async img=>{
-  const title=img.dataset.wiki; if(!title) return;
-  const u=await wikiPageImage(title,800); if(u) img.src=u;
- });
-}
-function renderTeams(){
- const grid=document.getElementById('teamGrid');
- grid.innerHTML=teams.map((t,ti)=>`<article class="team-card" style="--team:${t.color}"><div class="team-top"><div><div class="team-name">${t.name}</div><div class="team-sub">${t.tag} • 2026</div></div><img class="team-logo" data-team-logo="${t.name}" alt="${t.name} logo" src="${teamLogoUrl[t.name]||logoData(t.name)}"></div><div class="team-buttons">${t.drivers.map((d,di)=>`<button class="driver-button" data-ti="${ti}" data-di="${di}"><img data-wiki="${d.name}" alt="${d.name}" src="${driverImage[d.name]||logoData(t.name)}"><span class="driver-info"><small>#${d.number}</small><b>${d.name}</b></span></button>`).join('')}<button class="team-button" data-team="${ti}">TEAM PROFILE →</button></div></article>`).join('');
- grid.querySelectorAll('.driver-button').forEach(b=>b.onclick=()=>openDriver(+b.dataset.ti,+b.dataset.di));
- grid.querySelectorAll('.team-button').forEach(b=>b.onclick=()=>openTeam(+b.dataset.team));
- grid.querySelectorAll('img.driver-button, img.team-logo').forEach(img=>img.addEventListener('error',()=>{img.onerror=null;img.src=logoData('TEAM')}));
- grid.querySelectorAll('.driver-button img').forEach(img=>img.addEventListener('error',()=>{img.onerror=null;const b=img.closest('.driver-button');const t=teams[+b.dataset.ti];img.src=logoData(t.name)}));
- }
-const wikiTeam={McLaren:'McLaren',Ferrari:'Ferrari',Mercedes:'Mercedes', 'Red Bull Racing':'Red Bull Racing','Racing Bulls':'Racing Bulls',Alpine:'Alpine','Haas F1 Team':'Haas F1 Team',Audi:'Audi',Williams:'Williams','Aston Martin':'Aston Martin',Cadillac:'Cadillac'};
-function openDriver(ti,di){let t=teams[ti],d=t.drivers[di];resetProfileActions();setHero(t.color,d.name,d.nationality,'DRIVER PROFILE');profileContent(d,t)}
-function openTeam(ti){let t=teams[ti];setHero(t.color,t.name,'2026 CONSTRUCTOR','TEAM PROFILE');document.getElementById('driverTab').classList.remove('active');document.getElementById('teamTab').classList.add('active');renderTeamOnly(t)}
-function setHero(color,name,meta,kicker){document.getElementById('profile').style.setProperty('--accent',color);document.getElementById('profileKicker').textContent=kicker;document.getElementById('profileName').textContent=name;document.getElementById('profileMeta').textContent=meta;document.getElementById('profileNumber').textContent='';document.getElementById('profilePhoto').src=logoData('TEAM');document.getElementById('modal').classList.add('show');document.body.style.overflow='hidden'}
-function profileContent(d,t){document.getElementById('driverTab').classList.add('active');document.getElementById('teamTab').classList.remove('active');let p=document.getElementById('profilePhoto');p.src=driverImage[d.name]||logoData(t.name);document.getElementById('profileNumber').textContent='#'+d.number;document.getElementById('profileContent').innerHTML=`<section><h3>OVERVIEW</h3><p>${d.bio}</p></section><div class="profile-facts"><div class="fact"><small>NATIONALITY</small><b>${d.nationality}</b></div><div class="fact"><small>BIRTH</small><b>${d.dob}</b></div><div class="fact"><small>F1 DEBUT</small><b>${d.debut}</b></div><div class="fact"><small>WORLD TITLES</small><b>${d.titles}</b></div></div><section><h3>CAREER HIGHLIGHTS</h3><ul class="highlights">${d.highlights.map(x=>`<li class="highlight">${x}</li>`).join('')}</ul></section><section><h3>TEAM</h3><p>${t.name} • ${t.tag}</p></section>`}
-function renderTeamOnly(t){
- const logo=teamLogoUrl[t.name]||logoData(t.name);
- const p=document.getElementById('profilePhoto');
- p.src=logo; p.alt=t.name+' logo'; p.onerror=()=>{p.onerror=null;p.src=logoData(t.name)};
- document.getElementById('profileNumber').textContent='';
- document.getElementById('driverTab').style.display='none';
- document.getElementById('teamTab').style.display='none';
- document.getElementById('profileContent').innerHTML=`<section class="team-profile"><div class="team-banner"><img src="${logo}" alt="${t.name} logo"><div><h3>${t.name}</h3><p>2026 CONSTRUCTOR • ${t.tag}</p></div></div><div class="team-car"><div class="team-car-mark" style="--team:${t.color}">${t.tag}</div></div><div class="team-stats"><div class="team-stat"><small>DRIVERS</small><b>${t.drivers.map(d=>d.name).join(' / ')}</b></div><div class="team-stat"><small>TEAM CODE</small><b>${t.tag}</b></div><div class="team-stat"><small>2026 GRID</small><b>ACTIVE</b></div></div><p class="team-history">นี่คือหน้า <b>Team Profile</b> โดยเฉพาะ ไม่มี Overview หรือ Career Highlights ของนักแข่งมาปนกับข้อมูลทีม</p></section>`;
-}
-function resetProfileActions(){document.getElementById('driverTab').style.display='inline-block';document.getElementById('teamTab').style.display='inline-block';}
-
-document.getElementById('driverTab').onclick=()=>{let name=document.getElementById('profileName').textContent;let found=null;teams.forEach((t,ti)=>t.drivers.forEach((d,di)=>{if(d.name===name)found=[ti,di]}));if(found)openDriver(...found)};document.getElementById('teamTab').onclick=()=>{let name=document.getElementById('profileName').textContent;let ti=teams.findIndex(t=>t.name===name);if(ti>=0)openTeam(ti)};
-document.querySelectorAll('[data-close]').forEach(x=>x.onclick=closeModal);document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});function closeModal(){document.getElementById('modal').classList.remove('show');document.body.style.overflow=''}
-function renderSchedule(){
- const sg=document.getElementById('scheduleGrid');
- sg.innerHTML=races.map(r=>`<article class="race-card" data-date="${r.date}"><img class="circuit-img" data-circuit="${circuitWiki[r.venue]||r.venue}" src="${circuitSrc(r.venue)}" alt="${r.venue} circuit"><div class="race-body"><div class="round">ROUND ${String(r.round).padStart(2,'0')}${r.type?'<span class="sprint"> '+r.type+'</span>':''}</div><div class="race-name">${r.country} • ${r.venue}</div><div class="race-date">${fmtDate(r.date)}</div><div class="sessions"><div class="session"><span>FP1</span><b>${fmtTime(r.fp1)}</b></div><div class="session"><span>FP3</span><b>${fmtTime(r.fp3)}</b></div><div class="session"><span>Q</span><b>${fmtTime(r.qualifying)}</b></div><div class="session ${r.type?'sprint':''}"><span>${r.type?'SP':'R'}</span><b>${fmtTime(r.type?r.sprint:r.race)}</b></div></div><div class="status" data-status></div></div></article>`).join('');
- sg.querySelectorAll('.circuit-img').forEach(img=>img.addEventListener('error',()=>{img.onerror=null;img.src=circuitFallback(img.alt.replace(' circuit',''))}));
- updateCountdown();
-}
-
-function updateCountdown(){let now=new Date();let upcoming=races.map(r=>({...r,dt:new Date(r.date+'T'+r.race+':00') ,d:new Date(r.date+'T12:00:00')})).find(r=>r.dt>now);if(!upcoming)return;let diff=upcoming.dt-now;let card=[...document.querySelectorAll('.race-card')].find(x=>x.dataset.date===upcoming.date);let days=Math.floor(diff/86400000),hours=Math.floor(diff%86400000/3600000),mins=Math.floor(diff%3600000/60000),secs=Math.floor(diff%60000/1000);let text=days>0?`${days}d ${String(hours).padStart(2,'0')}h ${String(mins).padStart(2,'0')}m`:diff>86400000?`${Math.ceil(diff/3600000)}h`:`${String(hours).padStart(2,'0')}:${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;document.getElementById('nextRace').innerHTML=`<div class="next-main"><div><div class="eyebrow">NEXT GRAND PRIX</div><h3>${upcoming.country} • ${upcoming.venue}</h3><div>${fmtDate(upcoming.date)} • Race ${fmtTime(upcoming.race)}</div></div><div class="countdown">${text}</div></div>`;if(card){card.classList.toggle('live',diff<3600000);card.querySelector('[data-status]').innerHTML=diff<3600000?'<span class="live-badge">● LIVE SOON</span>':''}}
-renderTeams();
-renderSchedule();
-setInterval(updateCountdown,1000);
-timeFormat.addEventListener('click',()=>{use12=!use12;timeFormat.textContent=use12?'12-HOUR':'24-HOUR';renderSchedule()});
-document.getElementById('historyNav').addEventListener('click',()=>document.getElementById('history').scrollIntoView({behavior:'smooth'}));
-document.getElementById('seasonNav').textContent=`2026 SEASON • ${races.length} ROUNDS`;document.getElementById('seasonNav').addEventListener('click',()=>document.getElementById('schedule').scrollIntoView({behavior:'smooth'}));
-const teamsHeading=document.querySelector('#history h2');
-const seasonHeading=document.querySelector('#schedule h2');
-[teamsHeading,seasonHeading].forEach((h)=>{if(h){h.classList.add('clickable-heading');h.setAttribute('role','button');h.tabIndex=0;h.onclick=()=>document.getElementById(h===seasonHeading?'schedule':'history').scrollIntoView({behavior:'smooth'});h.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();h.click();}}}});
-
+const races = [
+  {round:1,country:'Australia',venue:'Melbourne',date:'2026-03-08',tz:'Australia/Melbourne',offset:'+11:00',fp1:'2026-03-06T01:30',fp2:'2026-03-06T05:00',fp3:'2026-03-07T01:30',qualifying:'2026-03-07T05:00',race:'2026-03-08T04:00',map:'6602.png'},
+  {round:2,country:'China',venue:'Shanghai',date:'2026-03-15',tz:'Asia/Shanghai',offset:'+08:00',fp1:'2026-03-13T03:30',sq:'2026-03-13T07:30',sprint:'2026-03-14T03:00',qualifying:'2026-03-14T07:00',race:'2026-03-15T07:00',map:'6603.webp',type:'SPRINT'},
+  {round:3,country:'Japan',venue:'Suzuka',date:'2026-03-29',tz:'Asia/Tokyo',offset:'+09:00',fp1:'2026-03-27T11:30',fp2:'2026-03-27T15:00',fp3:'2026-03-28T11:30',qualifying:'2026-03-28T15:00',race:'2026-03-29T14:00',map:'6604.webp'},
+  {round:4,country:'Miami',venue:'Miami',date:'2026-05-03',tz:'America/New_York',offset:'-04:00',fp1:'2026-05-01T16:00',sq:'2026-05-01T20:30',sprint:'2026-05-02T16:00',qualifying:'2026-05-02T20:00',race:'2026-05-03T17:00',map:'6605.webp',type:'SPRINT'},
+  {round:5,country:'Canada',venue:'Montreal',date:'2026-05-24',tz:'America/Toronto',offset:'-04:00',fp1:'2026-05-22T11:30',sq:'2026-05-22T15:30',sprint:'2026-05-23T11:00',qualifying:'2026-05-23T15:00',race:'2026-05-24T13:00',map:'6606.webp',type:'SPRINT'},
+  {round:6,country:'Monaco',venue:'Monaco',date:'2026-06-07',tz:'Europe/Monaco',offset:'+02:00',fp1:'2026-06-05T11:30',fp2:'2026-06-05T15:00',fp3:'2026-06-06T10:30',qualifying:'2026-06-06T14:00',race:'2026-06-07T13:00',map:'6607.webp'},
+  {round:7,country:'Spain',venue:'Barcelona-Catalunya',date:'2026-06-14',tz:'Europe/Madrid',offset:'+02:00',fp1:'2026-06-12T11:30',fp2:'2026-06-12T15:00',fp3:'2026-06-13T10:30',qualifying:'2026-06-13T14:00',race:'2026-06-14T13:00',map:'6608.webp'},
+  {round:8,country:'Austria',venue:'Spielberg',date:'2026-06-28',tz:'Europe/Vienna',offset:'+02:00',fp1:'2026-06-26T11:30',fp2:'2026-06-26T15:00',fp3:'2026-06-27T10:30',qualifying:'2026-06-27T14:00',race:'2026-06-28T13:00',map:'6609.webp'},
+  {round:9,country:'Great Britain',venue:'Silverstone',date:'2026-07-05',tz:'Europe/London',offset:'+01:00',fp1:'2026-07-03T11:30',sq:'2026-07-03T15:30',sprint:'2026-07-04T11:00',qualifying:'2026-07-04T15:00',race:'2026-07-05T14:00',map:'6610.webp',type:'SPRINT'},
+  {round:10,country:'Belgium',venue:'Spa-Francorchamps',date:'2026-07-19',tz:'Europe/Brussels',offset:'+02:00',fp1:'2026-07-17T11:30',fp2:'2026-07-17T15:00',fp3:'2026-07-18T10:30',qualifying:'2026-07-18T14:00',race:'2026-07-19T13:00',map:'6611.webp'},
+  {round:11,country:'Hungary',venue:'Budapest',date:'2026-07-26',tz:'Europe/Budapest',offset:'+02:00',fp1:'2026-07-24T11:30',fp2:'2026-07-24T15:00',fp3:'2026-07-25T10:30',qualifying:'2026-07-25T14:00',race:'2026-07-26T13:00',map:'6612.webp'},
+  {round:12,country:'Netherlands',venue:'Zandvoort',date:'2026-08-23',tz:'Europe/Amsterdam',offset:'+02:00',fp1:'2026-08-21T11:30',sq:'2026-08-21T15:30',sprint:'2026-08-22T11:00',qualifying:'2026-08-22T15:00',race:'2026-08-23T13:00',map:'6613.webp',type:'SPRINT'},
+  {round:13,country:'Italy',venue:'Monza',date:'2026-09-06',tz:'Europe/Rome',offset:'+02:00',fp1:'2026-09-04T11:30',fp2:'2026-09-04T15:00',fp3:'2026-09-05T10:30',qualifying:'2026-09-05T14:00',race:'2026-09-06T13:00',map:'6614.webp'},
+  {round:14,country:'Spain',venue:'Madrid / Madring',date:'2026-09-13',tz:'Europe/Madrid',offset:'+02:00',fp1:'2026-09-11T11:30',fp2:'2026-09-11T15:00',fp3:'2026-09-12T10:30',qualifying:'2026-09-12T14:00',race:'2026-09-13T13:00',map:'6615.webp'},
+  {round:15,country:'Azerbaijan',venue:'Baku',date:'2026-09-26',tz:'Asia/Baku',offset:'+04:00',fp1:'2026-09-24T08:30',fp2:'2026-09-24T12:00',fp3:'2026-09-25T08:30',qualifying:'2026-09-25T12:00',race:'2026-09-26T11:00',map:'6616.webp'},
+  {round:16,country:'Bahrain',venue:'Sepang / Malaysia',date:'2026-10-04',tz:'Asia/Kuala_Lumpur',offset:'+08:00',fp1:'2026-10-02T04:30',fp2:'2026-10-02T08:00',fp3:'2026-10-03T04:30',qualifying:'2026-10-03T08:00',race:'2026-10-04T07:00',map:'6617.png'},
+  {round:17,country:'Singapore',venue:'Marina Bay',date:'2026-10-11',tz:'Asia/Singapore',offset:'+08:00',fp1:'2026-10-09T08:30',sq:'2026-10-09T12:30',sprint:'2026-10-10T09:00',qualifying:'2026-10-10T13:00',race:'2026-10-11T12:00',map:'6618.webp',type:'SPRINT'},
+  {round:18,country:'United States',venue:'Austin / COTA',date:'2026-10-25',tz:'America/Chicago',offset:'-05:00',fp1:'2026-10-23T17:30',fp2:'2026-10-23T21:00',fp3:'2026-10-24T17:30',qualifying:'2026-10-24T21:00',race:'2026-10-25T20:00',map:'6619.webp'},
+  {round:19,country:'Mexico',venue:'Mexico City',date:'2026-11-01',tz:'America/Mexico_City',offset:'-06:00',fp1:'2026-10-30T18:30',fp2:'2026-10-30T22:00',fp3:'2026-10-31T17:30',qualifying:'2026-10-31T21:00',race:'2026-11-01T20:00',map:'6620.webp'},
+  {round:20,country:'Brazil',venue:'São Paulo / Interlagos',date:'2026-11-08',tz:'America/Sao_Paulo',offset:'-03:00',fp1:'2026-11-06T15:30',fp2:'2026-11-06T19:00',fp3:'2026-11-07T14:30',qualifying:'2026-11-07T18:00',race:'2026-11-08T17:00',map:'6621.webp'},
+  {round:21,country:'United States',venue:'Las Vegas',date:'2026-11-21',tz:'America/Los_Angeles',offset:'-08:00',fp1:'2026-11-20T00:30',fp2:'2026-11-20T04:00',fp3:'2026-11-21T00:30',qualifying:'2026-11-21T04:00',race:'2026-11-22T04:00',map:'6622.webp'},
+  {round:22,country:'Qatar',venue:'Lusail',date:'2026-11-29',tz:'Asia/Qatar',offset:'+03:00',fp1:'2026-11-27T13:30',fp2:'2026-11-27T17:00',fp3:'2026-11-28T14:30',qualifying:'2026-11-28T18:00',race:'2026-11-29T16:00',map:'6623.png'},
+  {round:23,country:'Abu Dhabi',venue:'Yas Marina',date:'2026-12-06',tz:'Asia/Dubai',offset:'+04:00',fp1:'2026-12-04T09:30',fp2:'2026-12-04T13:00',fp3:'2026-12-05T10:30',qualifying:'2026-12-05T14:00',race:'2026-12-06T13:00',map:'6624.webp'}
+];
+const circuitImages = Object.fromEntries(races.map(r=>[r.venue,`assets/circuits/IMG_${r.map}`]));
+const driverImages={
+'Lando Norris':'assets/drivers/norris.webp','Oscar Piastri':'assets/drivers/piastri.webp','Charles Leclerc':'assets/drivers/leclerc.webp','Lewis Hamilton':'assets/drivers/hamilton.webp','George Russell':'assets/drivers/russell.webp','Andrea Kimi Antonelli':'assets/drivers/antonelli.webp','Max Verstappen':'assets/drivers/verstappen.webp','Isack Hadjar':'assets/drivers/hadjar.webp','Liam Lawson':'assets/drivers/lawson.webp','Arvid Lindblad':'assets/drivers/lindblad.webp','Pierre Gasly':'assets/drivers/gasly.webp','Franco Colapinto':'assets/drivers/colapinto.webp','Esteban Ocon':'assets/drivers/ocon.webp','Oliver Bearman':'assets/drivers/bearman.webp','Nico Hülkenberg':'assets/drivers/hulkenberg.webp','Gabriel Bortoleto':'assets/drivers/bortoleto.webp','Carlos Sainz':'assets/drivers/sainz.webp','Alexander Albon':'assets/drivers/albon.webp','Fernando Alonso':'assets/drivers/alonso.webp','Lance Stroll':'assets/drivers/stroll.webp','Sergio Pérez':'assets/drivers/perez.webp','Valtteri Bottas':'assets/drivers/bottas.webp'};
+const teamImages={'Mercedes':'assets/teams/mercedes.webp','Alpine':'assets/teams/alpine.png','Williams':'assets/teams/williams.png','McLaren':'assets/teams/mclaren.png','Cadillac':'assets/teams/cadillac.png','Ferrari':'assets/teams/ferrari.png','Red Bull Racing':'assets/teams/redbull.webp','Racing Bulls':'assets/teams/racingbulls.png','Haas F1 Team':'assets/teams/haas.png','Audi':'assets/teams/audi.webp','Aston Martin':'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Aston_Martin_Aramco_F1_Team_logo.svg/500px-Aston_Martin_Aramco_F1_Team_logo.svg.png'};
+const FALLBACK='https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/F1.svg/300px-F1.svg.png';
+let use12=true; const timeFormat=document.getElementById('timeFormat');
+function fmtTime(t){if(!t)return '—';const d=new Date(t+'+00:00');let h=d.getUTCHours(),m=d.getUTCMinutes();if(!use12)return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;const ap=h>=12?'PM':'AM';h=h%12||12;return `${h}:${String(m).padStart(2,'0')} ${ap}`}
+function fmtDate(s){return new Intl.DateTimeFormat('th-TH',{day:'numeric',month:'long',year:'numeric'}).format(new Date(s+'T12:00:00Z'))}
+function eventMs(local,offset){return Date.parse(local.replace('T','T')+offset)}
+function sessionList(r){const a=[];if(r.fp1)a.push({key:'fp1',label:'FP1',start:r.fp1,duration:60});if(r.fp2)a.push({key:'fp2',label:'FP2',start:r.fp2,duration:60});if(r.fp3)a.push({key:'fp3',label:'FP3',start:r.fp3,duration:60});if(r.sq)a.push({key:'sq',label:'SQ',start:r.sq,duration:45});if(r.sprint)a.push({key:'sprint',label:'SP',start:r.sprint,duration:60});if(r.qualifying)a.push({key:'qualifying',label:'Q',start:r.qualifying,duration:60});if(r.race)a.push({key:'race',label:'R',start:r.race,duration:150});return a}
+function findLiveSession(now=Date.now()){for(const r of races){for(const s of sessionList(r)){const start=eventMs(s.start,r.offset),end=start+s.duration*60000;if(now>=start&&now<end)return {r,s,start,end}}}return null}
+function nextSession(now=Date.now()){let best=null;for(const r of races)for(const s of sessionList(r)){const start=eventMs(s.start,r.offset);if(start>now&&(!best||start<best.start))best={r,s,start}}return best}
+function countdownText(diff){if(diff<=0)return '00:00:00';if(diff>86400000){const d=Math.floor(diff/86400000),h=Math.floor(diff%86400000/3600000),m=Math.floor(diff%3600000/60000);return `${d}d ${String(h).padStart(2,'0')}h ${String(m).padStart(2,'0')}m`}if(diff>3600000){const h=Math.floor(diff/3600000),m=Math.floor(diff%3600000/60000),s=Math.floor(diff%60000/1000);return `${h}h ${String(m).padStart(2,'0')}m ${String(s).padStart(2,'0')}s`}const m=Math.floor(diff/60000),s=Math.floor(diff%60000/1000);return `${m}m ${String(s).padStart(2,'0')}s`}
+function renderTeams(){const grid=document.getElementById('teamGrid');grid.innerHTML=teams.map((t,ti)=>`<article class="team-card" style="--team:${t.color}"><div class="team-top"><div><div class="team-name">${t.name}</div><div class="team-sub">${t.tag} • 2026</div></div><img class="team-logo" src="${teamImages[t.name]||FALLBACK}" alt="${t.name} logo"></div><div class="team-buttons">${t.drivers.map((d,di)=>`<button class="driver-button" data-ti="${ti}" data-di="${di}"><img src="${driverImages[d.name]||FALLBACK}" alt="${d.name}"><span class="driver-info"><small>#${d.number}</small><b>${d.name}</b></span></button>`).join('')}<button class="team-button" data-team="${ti}">TEAM PROFILE →</button></div></article>`).join('');document.querySelectorAll('.driver-button').forEach(b=>b.onclick=()=>openDriver(+b.dataset.ti,+b.dataset.di));document.querySelectorAll('.team-button').forEach(b=>b.onclick=()=>openTeam(+b.dataset.team))}
+function setHero(color,name,meta,kicker){document.getElementById('profile').style.setProperty('--accent',color);document.getElementById('profileKicker').textContent=kicker;document.getElementById('profileName').textContent=name;document.getElementById('profileMeta').textContent=meta;document.getElementById('profileNumber').textContent='';document.getElementById('modal').classList.add('show');document.body.style.overflow='hidden'}
+function openDriver(ti,di){const t=teams[ti],d=t.drivers[di];setHero(t.color,d.name,d.nationality,'DRIVER PROFILE');document.getElementById('driverTab').style.display='inline-flex';document.getElementById('teamTab').style.display='inline-flex';document.getElementById('driverTab').classList.add('active');document.getElementById('teamTab').classList.remove('active');document.getElementById('profilePhoto').src=driverImages[d.name]||FALLBACK;document.getElementById('profileNumber').textContent='#'+d.number;document.getElementById('profileContent').innerHTML=`<section><h3>OVERVIEW</h3><p>${d.bio}</p></section><div class="profile-facts"><div class="fact"><small>NATIONALITY</small><b>${d.nationality}</b></div><div class="fact"><small>BIRTH</small><b>${d.dob}</b></div><div class="fact"><small>F1 DEBUT</small><b>${d.debut}</b></div><div class="fact"><small>WORLD TITLES</small><b>${d.titles}</b></div></div><section><h3>CAREER HIGHLIGHTS</h3><ul class="highlights">${d.highlights.map(x=>`<li class="highlight">${x}</li>`).join('')}</ul></section><section><h3>TEAM</h3><p>${t.name} • ${t.tag}</p></section>`}
+function openTeam(ti){const t=teams[ti];setHero(t.color,t.name,'2026 CONSTRUCTOR','TEAM PROFILE');document.getElementById('driverTab').style.display='none';document.getElementById('teamTab').style.display='none';document.getElementById('profilePhoto').src=teamImages[t.name]||FALLBACK;document.getElementById('profileContent').innerHTML=`<section class="team-profile"><div class="team-banner"><img src="${teamImages[t.name]||FALLBACK}" alt="${t.name} logo"><div><h3>${t.name}</h3><p>2026 CONSTRUCTOR • ${t.tag}</p></div></div><div class="team-drivers">${t.drivers.map(d=>`<div class="mini-driver"><img src="${driverImages[d.name]||FALLBACK}" alt="${d.name}"><div><b>${d.name}</b><span>#${d.number}</span></div></div>`).join('')}</div><div class="team-stats"><div class="team-stat"><small>TEAM CODE</small><b>${t.tag}</b></div><div class="team-stat"><small>2026 GRID</small><b>ACTIVE</b></div><div class="team-stat"><small>DRIVERS</small><b>2</b></div></div></section>`}
+document.getElementById('driverTab').onclick=()=>{const name=document.getElementById('profileName').textContent;for(let ti=0;ti<teams.length;ti++)for(let di=0;di<teams[ti].drivers.length;di++)if(teams[ti].drivers[di].name===name)return openDriver(ti,di)};document.getElementById('teamTab').onclick=()=>{const name=document.getElementById('profileName').textContent;const ti=teams.findIndex(t=>t.name===name);if(ti>=0)openTeam(ti)};document.querySelectorAll('[data-close]').forEach(x=>x.onclick=closeModal);document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});function closeModal(){document.getElementById('modal').classList.remove('show');document.body.style.overflow=''}
+function renderSchedule(){const sg=document.getElementById('scheduleGrid');sg.innerHTML=races.map(r=>`<article class="race-card" data-round="${r.round}"><img class="circuit-img" src="${circuitImages[r.venue]}" alt="${r.venue} circuit"><div class="race-body"><div class="round">ROUND ${String(r.round).padStart(2,'0')}${r.type?`<span class="sprint"> ${r.type}</span>`:''}</div><div class="race-name">${r.country} • ${r.venue}</div><div class="race-date">${fmtDate(r.date)}</div><div class="sessions"><div class="session"><span>FP1</span><b>${fmtTime(r.fp1)}</b></div>${r.fp2?`<div class="session"><span>FP2</span><b>${fmtTime(r.fp2)}</b></div>`:''}${r.fp3?`<div class="session"><span>FP3</span><b>${fmtTime(r.fp3)}</b></div>`:''}${r.sq?`<div class="session sprint"><span>SQ</span><b>${fmtTime(r.sq)}</b></div>`:''}${r.sprint?`<div class="session sprint"><span>SP</span><b>${fmtTime(r.sprint)}</b></div>`:''}<div class="session"><span>Q</span><b>${fmtTime(r.qualifying)}</b></div><div class="session"><span>R</span><b>${fmtTime(r.race)}</b></div></div><div class="status" data-status></div></div></article>`).join('');updateCountdown()}
+function updateCountdown(){const now=Date.now(),live=findLiveSession(now),next=nextSession(now);document.querySelectorAll('.race-card').forEach(c=>{c.classList.remove('live');c.querySelector('[data-status]').innerHTML=''});if(live){const card=document.querySelector(`.race-card[data-round="${live.r.round}"]`);if(card){card.classList.add('live');card.querySelector('[data-status]').innerHTML=`<span class="live-badge">● LIVE — ${live.s.label}</span>`}document.getElementById('nextRace').innerHTML=`<div class="next-main"><div><div class="eyebrow">🔴 F1 LIVE NOW</div><h3>${live.r.country} • ${live.r.venue}</h3><div>${live.s.label} • ถ่ายทอดสด/กำลังแข่งขัน</div></div><div class="countdown live-count">LIVE</div></div>`;return}if(!next){document.getElementById('nextRace').innerHTML='<div class="next-main"><div><div class="eyebrow">SEASON COMPLETE</div><h3>2026 F1 SEASON</h3></div></div>';return}const diff=next.start-now;const card=document.querySelector(`.race-card[data-round="${next.r.round}"]`);if(card)card.querySelector('[data-status]').innerHTML=diff<3600000?'<span class="live-badge soon">● LIVE SOON</span>':'';document.getElementById('nextRace').innerHTML=`<div class="next-main"><div><div class="eyebrow">NEXT SESSION</div><h3>${next.r.country} • ${next.r.venue}</h3><div>${next.s.label} • ${fmtDate(next.s.start.slice(0,10))} • ${fmtTime(next.s.start)}</div></div><div class="countdown">${countdownText(diff)}</div></div>`}
+renderTeams();renderSchedule();setInterval(updateCountdown,1000);timeFormat.onclick=()=>{use12=!use12;timeFormat.textContent=use12?'12-HOUR':'24-HOUR';renderSchedule()};
